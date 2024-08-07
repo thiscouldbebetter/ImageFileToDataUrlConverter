@@ -1,0 +1,61 @@
+<html>
+<body>
+
+<div id="divUi">
+
+	<h3>Image File to Data URL Converter</h3>
+
+	<p>
+		Upload an image file to convert it to a data URL.
+	</p>
+
+	<div>
+		<label>Image File to Convert:</label>
+		<input type="file" onchange="inputFile_Loaded(this)"></input>
+	</div>
+	
+	<div>
+		<label>Image as Data URL:</label>
+		<br />
+		<textarea id="textareaImageAsDataUrl" cols="40" rows="16"></textarea>
+	</div>
+	
+	<div>
+		<label>Image Rendered from Data URL:</label>
+		<br />
+		<div id="divImageRenderedFromDataUrl">[none]</div>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+
+function inputFile_Loaded(inputFile)
+{
+	var file = inputFile.files[0];
+	if (file != null)
+	{
+		var fileReader = new FileReader();
+		fileReader.onload = (event) =>
+		{
+			var imageAsDataUrl = event.target.result;
+			var d = document;
+			var textareaImageAsDataUrl =
+				d.getElementById("textareaImageAsDataUrl");
+			textareaImageAsDataUrl.value = imageAsDataUrl;
+
+			var imageAsImgElement = d.createElement("img");
+			imageAsImgElement.src = imageAsDataUrl;
+			var divImageRenderedFromDataUrl =
+				d.getElementById("divImageRenderedFromDataUrl");
+			divImageRenderedFromDataUrl.innerHTML = "";
+			divImageRenderedFromDataUrl.appendChild(imageAsImgElement);
+		}
+		fileReader.readAsDataURL(file);
+	}
+}
+
+</script>
+
+</body>
+</html>
